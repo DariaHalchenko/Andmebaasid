@@ -22,18 +22,18 @@ CREATE TABLE koostis(
     FOREIGN KEY (yhik_id) REFERENCES yhik(yhik_id)
     );
 
-
+-- tabeli kasutaja
 CREATE TABLE kasutaja(
     kasutaja_id int PRIMARY KEY AUTO_INCREMENT,
     eesnimi varchar(50),
     perenimi varchar(50),
     email varchar(150));
 
-
+-- tabeli kategooria
 CREATE TABLE kategooria(
     kategooria_id int PRIMARY KEY AUTO_INCREMENT,
     kategooria_nimi varchar(100));
-
+-- tabli retsept
 CREATE TABLE  retsept(
     retsept_id int PRIMARY KEY AUTO_INCREMENT,
     retsepti_nimi varchar(100),

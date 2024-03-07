@@ -33,3 +33,14 @@ CREATE TABLE kasutaja(
 CREATE TABLE kategooria(
     kategooria_id int PRIMARY KEY AUTO_INCREMENT,
     kategooria_nimi varchar(100));
+
+CREATE TABLE  retsept(
+    retsept_id int PRIMARY KEY AUTO_INCREMENT,
+    retsepti_nimi varchar(100),
+    kirjeldus varchar(200),
+    juhend text,
+    sisestatud_kp date,
+    kasutaja_id int,
+    kategooria_id int,
+    FOREIGN KEY (kasutaja_id) REFERENCES kasutaja(kasutaja_id),
+    FOREIGN KEY (kategooria_id) REFERENCES kategooria(kategooria_id));

@@ -18,7 +18,7 @@ ON DimEmployee(FirstName)
 -- kustutama praeguse klastreeritud indeksi Id veerus (siis saad veateate)
 Drop index DimEmployee.PK_DimEmployee_EmployeeKey
 
---uue klastreeritud ühendindeksi loomiseks Gender ja Salary veeru põhjal
+--uue klastreeritud ühendindeksi loomiseks Gender ja BaseRate veeru põhjal
 Create Clustered Index IX_tblEmployee_Gender_Salary
 ON DimEmployee (Gender DESC, BaseRate ASC)
 

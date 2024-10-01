@@ -1,54 +1,47 @@
 --92.DDL_trigger_SQL_Serveris
+
 --DDL trigger saab luua konkreetsesse andmebaasi või serveri tasemel.
-create trigger trMyFirstTrigger
-on database
-for CREATE_TABLE
-as
-begin
-print 'New table created'
-end
+Create trigger trMyFirstTrigger
+ON database
+FOR CREATE_TABLE
+AS
+BEGIN
+  Print 'New table created'
+END
+Create Table Test (Id int)
 
-create table Test (id int)
+--see trigger käivitatakse mitu korda nagu muuda ja kustuta tabel, siis eralda sündmused ning kasuta koma
+Alter trigger trMyFirstTrigger
+ON database
+FOR CREATE_TABLE,ALTER_TABLE,DROP_TABLE
+AS
+BEGIN
+  Print 'A table has just been created, modified or deleted'
+END
 
+--kuidas ära hoida kasutajatel loomaks, muutmaks või kustatamiseks tabelit. 
+Alter trigger trMyFirstTrigger
+ON Database
+FOR CREATE_TABLE,ALTER_TABLE,DROP_TABLE
+AS
+BEGIN
+Rollback
+  Print 'You cannot create, alter or drop a table'
+END
 
---Kui soovid, et see trigger käivitatakse mitu korda nagu muuda ja kustuta tabel, siis eralda sündmused ning kasuta koma.
-alter trigger trMyFirstTrigger
-on database
-for CREATE_TABLE,ALTER_TABLE,DROP_TABLE
-as
-begin
-print 'A table has just been created, modified or deleted'
-end
+--Kui lubada triggerit
+DISABLE Trigger trMyFirstTrigger ON Database
 
-alter table Test
-add test varchar(50)
+--Kuidas kustutada triggerit
+Drop Trigger trMyFirstTrigger ON Database
 
---Nüüd vaatame näidet, kuidas ära hoida kasutajatel loomaks, muutmaks või kustatamiseks tabelit. 
-alter trigger trMyFirstTrigger
-on database
-for CREATE_TABLE,ALTER_TABLE,DROP_TABLE
-as
-begin
-rollback
-print 'You cannot create, alter or drop a table'
-end
-
-drop table Test
-
---Kui lubada triggerit:
-disable trigger trMyFirstTrigger on database
-
---Kuidas kustutada triggerit:
-drop trigger trMyFirstTrigger on database
-
---Järgnev trigger käivitub, kui peaksid kasutama sp_rename käsklust süsteemi stored procedurite muutmisel.
 --Järgnev kood muudab TestTable nime NewTestTable nimeks
-create trigger trRenameTable
-on database
-for RENAME
-as
-begin
-print 'You just renamed something'
-end
+Create trigger trRenameTable
+ON Database
+FOR RENAME
+AS
+BEGIN
+  Print 'You just renamed something'
+END
 
 sp_rename 'Test','NewTesttable'

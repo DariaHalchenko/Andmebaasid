@@ -45,3 +45,34 @@ BEGIN
 END
 
 sp_rename 'Test','NewTesttable'
+
+--93. Server-Scoped DDL triggerid
+
+--See ei luba luua, muuta ja kustutada tabeleid andmebaasist sinna, kuhu see on loodud.
+Create trigger tr_DatabaseScopeTrigger
+ON Database
+FOR CREATE_TABLE,ALTER_TABLE,DROP_TABLE
+AS
+BEGIN
+Rollback
+  Print 'You cannot create, alter or drop a table in the current database'
+END
+
+--See on nagu andembaasi vahemiku trigger, aga erinevus seisneb, et sa pead lisama koodis sõna ALL peale
+Create trigger tr_ServerScopeTrigger
+ON ALL SERVER
+FOR CREATE_TABLE,ALTER_TABLE,DROP_TABLE
+AS
+BEGIN
+Rollback
+  Print 'You cannot create, alter or drop a table in any database on the server'
+END
+
+--Kuidas saab Serveri ulatuses olevat DDL trigerit kinni panna
+DISABLE Trigger tr_ServerScopeTrigger ON ALL SERVER
+
+--Kuidas lubada Serveri ulatuses olevat DDL trigerit
+ENABLE Trigger tr_ServerScopeTrigger ON ALL SERVER
+
+--Kuidas kustutada serveri ulatuses olevat DDL trigerit
+DROP Trigger tr_ServerScopeTrigger ON ALL SERVER

@@ -65,6 +65,26 @@ CREATE UNIQUE INDEX IX_tblEmployee_City
 ON tblEmployee(City)
 WITH IGNORE_DUP_KEY
 
+--38. Indeksi plussid ja miinused
+--Loo mitte-klastreeritud indeks BaseRate veerule
+Create NonClustered Index IX_tblEmployee_Salary
+On DimEmployee (BaseRate Asc) 
+
+--Järgnev SELECT päring saab kasu BaseRate veeru indeksist 
+Select * From DimEmployee where BaseRate > 40 and BaseRate < 80
+
+--Kui soovid uuendada või kustutada rida, siis SQL server peab esmalt leidma rea ja indeks saab aidata seda otsingut kiirendada.
+Delete from DimEmployee where BaseRate = 25
+Update DimEmployee Set BaseRate = 9000 where BaseRate = 7500
+
+--Indeksid saavad aidata päringuid
+Select * from DimEmployee order by BaseRate
+Select * from DimEmployee order by BaseRate Desc
+
+--GROUP BY päringud saavad kasu indeksitest. 
+Select BaseRate, COUNT(BaseRate) as Total
+from DimEmployee
+Group By BaseRate
 
 
 

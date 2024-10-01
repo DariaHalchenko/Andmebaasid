@@ -44,3 +44,33 @@ sp_helptext vWEmployeesByDepartment
 sp_helptext vWITDepartment_Employees
 sp_helptext vWEmployeesNonConfidentialData
 sp_helptext vWEmployeesCountByDepartment
+
+-- 40. View uuendused
+-- Teeme View, mis tagastab peaaegu kõik veerud
+Create view vWEmployeesDataExceptSalary
+AS
+SELECT EmployeeKey, FirstName, Gender, DepartmentName
+From DimEmployee
+Select * from vWEmployeesDataExceptSalary
+
+--Järgnev päring uuendab Name veerus olevat nime Mike Mikey peale
+Update vWEmployeesDataExceptSalary
+Set FirstName = 'Mikey' Where EmployeeKey =2
+
+--sisestada ja kustutada ridu baastabelis ning kasutada view-d
+Delete from vWEmployeesDataExceptSalary where EmployeeKey =2
+Insert into vWEmployeesDataExceptSalary values(2, 'Mikey', 'Male', 'Marketing')
+
+--Loome kahte tabelit ühendava view
+Create view vWEmployeesDatailsByDepartment
+AS
+SELECT EmployeeKey, FirstName, Gender, DepartmentName
+From DimEmployee
+join DimDepartmentGroup
+on DimEmployee.DepartmentName = DimDepartmentGroup.DepartmentGroupName
+SELECT * FROM vWEmployeesDatailsByDepartment
+
+--uuendame John osakonda HR pealt IT peale
+Update vWEmployeesDatailsByDepartment
+set DepartmentName='IT' where FirstName='Mark'
+

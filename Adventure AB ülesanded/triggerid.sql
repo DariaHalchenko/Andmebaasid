@@ -32,6 +32,8 @@ Rollback
   Print 'You cannot create, alter or drop a table'
 END
 
+DROP TABLE Test
+  
 --Kui lubada triggerit
 DISABLE Trigger trMyFirstTrigger ON Database
 

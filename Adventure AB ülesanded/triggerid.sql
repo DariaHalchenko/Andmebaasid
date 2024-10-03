@@ -19,6 +19,9 @@ BEGIN
   Print 'A table has just been created, modified or deleted'
 END
 
+ALTER TABLE Test
+ADD test varchar(10)
+
 --kuidas ära hoida kasutajatel loomaks, muutmaks või kustatamiseks tabelit. 
 Alter trigger trMyFirstTrigger
 ON Database

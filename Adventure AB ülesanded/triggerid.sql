@@ -63,6 +63,8 @@ Rollback
   Print 'You cannot create, alter or drop a table in the current database'
 END
 
+DROP TABLE NewTesttable
+
 --See on nagu andembaasi vahemiku trigger, aga erinevus seisneb, et sa pead lisama koodis sõna ALL peale
 Create trigger tr_ServerScopeTrigger
 ON ALL SERVER
